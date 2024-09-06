@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -15,6 +16,8 @@ import * as d3 from 'd3';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
+  @Input('bgColour') bgColour: string = 'red';
+
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit(): void {
@@ -32,7 +35,8 @@ export class AppComponent implements OnInit {
       .append('svg')
       .attr('width', width)
       .attr('height', height)
-      .classed('testclass', true);
+      .classed('testclass', true)
+      .style('background', this.bgColour);
 
     // Declare the x (horizontal position) scale.
     const x = d3
