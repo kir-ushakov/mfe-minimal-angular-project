@@ -1,8 +1,10 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewEncapsulation,
 } from '@angular/core';
 import * as d3 from 'd3';
@@ -16,9 +18,12 @@ import * as d3 from 'd3';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
-  @Input('bgColour') bgColour: string = 'red';
+  @Input() bgColour: string = 'red';
+  @Output() onClick = new EventEmitter<number>();
 
   constructor(private elementRef: ElementRef) {}
+
+  clicksCnt = 0;
 
   ngOnInit(): void {
     // Declare the chart dimensions and margins.
@@ -68,5 +73,10 @@ export class AppComponent implements OnInit {
       .select('#chart')
       .selectAll('*')
       .remove();
+  }
+
+  click() {
+    this.clicksCnt++;
+    this.onClick.emit(this.clicksCnt);
   }
 }
